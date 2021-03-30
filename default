@@ -1,0 +1,48 @@
+server {
+        listen 80;
+        server_name _;
+
+       
+
+        root /var/www/cakebox/public/;
+
+        access_log /var/log/nginx/cakebox-access.log;
+        error_log  /var/log/nginx/cakebox-error.log;
+        auth_basic "Restricted";
+        auth_basic_user_file /.htpasswd;
+        #site root is redirected to the app boot script
+        location = / {
+            try_files @site @site;
+        }
+
+        #all other locations try other files first and go to our front controller if none of them exists
+        location / {
+            try_files $uri $uri/ @site;
+        }
+
+        location /access/ {
+        alias /downloads/;
+        allow all;
+        satisfy any;
+        add_header Content-Disposition "attachment";
+    }
+
+       location ~ \.php$ {
+        try_files $uri =404;
+        include fastcgi_params;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    }
+
+
+        #main configuration
+        location @site {
+            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+            include fastcgi_params;
+            fastcgi_param  SCRIPT_FILENAME $document_root/index.php;
+            ## use debug instead of production to get more log
+            fastcgi_param APPLICATION_ENV production;
+            ## fastcgi_param HTTPS on;
+        }
+}

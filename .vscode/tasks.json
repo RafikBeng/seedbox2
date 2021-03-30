@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "docker build -t seedbox . ",
+            "command": "docker build -t qbittorrent . ",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -16,7 +16,7 @@
         {
             "label": "run",
             "type": "shell",
-            "command": "docker run -d --name seedbox -p 65432:65432 -p 65432:65432/udp -p 6881:6881/udp -p 80:80 seedbox",
+            "command": "docker run -d --name qbittorrent -p 6881:6881 -p 6881:6881/udp -p 8080:8080 -p 80:80 qbittorrent",
             "problemMatcher": [],
             "group": {
                 "kind": "test",

@@ -15,16 +15,13 @@ RUN curl -sSL http://getcomposer.org/installer | php \
 RUN npm install -g bower
 
 RUN mkdir -p /var/www
-
-RUN git clone https://github.com/cakebox/cakebox.git /var/www/cakebox \
-    && cd /var/www/cakebox \
-    && git checkout tags/$(git describe --abbrev=0) \
+RUN mkdir -p /downloads/watch
+ADD /src/ /
+RUN cd /var/www/cakebox \
     && composer install \
-    && bower install --config.interactive=false --allow-root \
-    && cp config/default.php.dist config/default.php \
-    && sed -i "/cakebox.root/s,/var/www,/downloads," config/default.php
-
+    && bower install --config.interactive=false --allow-root
 COPY .htpasswd /.htpasswd
 COPY root/ /
+
 COPY default /etc/nginx/sites-available/default
 EXPOSE 80 6881 6881/udp 8080

@@ -24,4 +24,4 @@ COPY .htpasswd /.htpasswd
 COPY root/ /
 
 COPY default /etc/nginx/sites-available/default
-EXPOSE 80 6881 6881/udp 8080
+EXPOSE 80 6881

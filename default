@@ -32,7 +32,7 @@ server {
 
     #alias for download and streaming
     location /access/ {
-        alias /downloads;
+        alias /downloads/;
         allow all;
         satisfy any;
         add_header Content-Disposition "attachment";

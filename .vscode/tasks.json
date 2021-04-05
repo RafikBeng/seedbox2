@@ -16,7 +16,7 @@
         {
             "label": "run",
             "type": "shell",
-            "command": "docker run -d --name qbittorrent -p 6881:6881 -p 6881:6881/udp -p 8080:8080 -p 80:80 qbittorrent",
+            "command": "docker run -d --name qbittorrent -p 6881:6881 -p 80:80 qbittorrent",
             "problemMatcher": [],
             "group": {
                 "kind": "test",
